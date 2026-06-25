@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() {
             prefs = getSharedPreferences("taoli_pending", MODE_PRIVATE)
 
             val status = findViewById<TextView>(R.id.status_text)
-            val count = dbHelper.allRecords.size
+            val count = dbHelper.getAllRecords().size
             status.text = "✅ 数据库正常，${count}条记录\n\n点击下方按钮开始使用"
 
             // Setup bottom nav if it exists
