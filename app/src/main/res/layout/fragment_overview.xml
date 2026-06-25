@@ -36,8 +36,10 @@
             android:gravity="center"
             android:padding="20dp">
             <TextView android:id="@+id/total_label" android:text="今日总消费"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:textColor="#FFFFFF" android:textSize="13sp" android:alpha="0.85" />
             <TextView android:id="@+id/total_amount" android:text="0.00"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:textColor="#FFFFFF" android:textSize="36sp" android:textStyle="bold"
                 android:layout_marginTop="4dp" />
         </LinearLayout>
@@ -57,6 +59,7 @@
             android:orientation="vertical"
             android:padding="16dp">
             <TextView android:text="分类统计" android:textSize="14sp"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:textStyle="bold" android:textColor="@color/text_primary"
                 android:layout_marginBottom="12dp" />
             <androidx.recyclerview.widget.RecyclerView
@@ -79,6 +82,7 @@
             android:orientation="vertical"
             android:padding="16dp">
             <TextView android:text="消费分布" android:textSize="14sp"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
                 android:textStyle="bold" android:textColor="@color/text_primary"
                 android:layout_marginBottom="12dp" />
             <com.taoli.xingqiu.view.PieChartView
