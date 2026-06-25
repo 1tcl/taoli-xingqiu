@@ -20,4 +20,10 @@ class MainActivity : AppCompatActivity() {
             status.text = "❌ ${e.javaClass.simpleName}: ${e.message}"
         }
     }
+
+    // Stub methods required by fragments (not used in minimal test)
+    val dbHelper by lazy { com.taoli.xingqiu.data.DatabaseHelper(this) }
+    fun getCategories(): List<String> = listOf("饭菜钱", "路程篇", "购物消费", "娱乐消费", "日常用品", "其他")
+    fun saveCategories(categories: List<String>) {}
+    fun refreshAllFragments() {}
 }
