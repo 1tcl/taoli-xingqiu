@@ -7,12 +7,14 @@
     android:padding="24dp">
 
     <TextView android:text="💸 检测到付费"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
         android:textSize="20sp" android:textStyle="bold"
         android:textColor="@color/text_primary"
         android:gravity="center"
         android:layout_marginBottom="20dp" />
 
     <TextView android:text="消费金额" android:textSize="13sp"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
         android:textColor="@color/text_secondary" android:layout_marginBottom="6dp" />
     <EditText android:id="@+id/pay_amount"
         android:layout_width="match_parent" android:layout_height="48dp"
@@ -21,6 +23,7 @@
         android:background="@drawable/input_bg" android:layout_marginBottom="16dp" />
 
     <TextView android:text="备注" android:textSize="13sp"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
         android:textColor="@color/text_secondary" android:layout_marginBottom="6dp" />
     <EditText android:id="@+id/pay_note"
         android:layout_width="match_parent" android:layout_height="48dp"
@@ -29,6 +32,7 @@
         android:background="@drawable/input_bg" android:layout_marginBottom="16dp" />
 
     <TextView android:text="消费类型" android:textSize="13sp"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
         android:textColor="@color/text_secondary" android:layout_marginBottom="8dp" />
     <com.google.android.flexbox.FlexboxLayout
         android:id="@+id/type_grid"
