@@ -30,7 +30,28 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        Thread.setDefaultUncaughtExceptionHandler { _, e ->
+            val msg = e.toString() + "\n\n" + e.stackTrace.take(10).joinToString("\n")
+            runOnUiThread {
+                AlertDialog.Builder(this@MainActivity)
+                    .setTitle("APP 崩溃了")
+                    .setMessage(msg)
+                    .setPositiveButton("确定") { _, _ -> finish() }
+                    .setCancelable(false)
+                    .show()
+            }
+        }
+        try {
+            setContentView(R.layout.activity_main)
+        } catch (e: Exception) {
+            AlertDialog.Builder(this)
+                .setTitle("启动崩溃")
+                .setMessage(e.toString())
+                .setPositiveButton("确定") { _, _ -> finish() }
+                .setCancelable(false)
+                .show()
+            return
+        }
 
         dbHelper = DatabaseHelper(this)
         prefs = getSharedPreferences("taoli_pending", MODE_PRIVATE)
