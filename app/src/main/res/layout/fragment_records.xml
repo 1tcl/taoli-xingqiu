@@ -19,6 +19,7 @@
         <TextView android:id="@+id/mf_label" android:text="2026年6月"
             android:textSize="16sp" android:textStyle="bold"
             android:layout_width="0dp" android:layout_weight="1"
+            android:layout_height="wrap_content"
             android:gravity="center" android:textColor="@color/text_primary" />
         <ImageButton android:id="@+id/mf_next" android:src="@drawable/ic_arrow_right"
             android:layout_width="32dp" android:layout_height="32dp"
