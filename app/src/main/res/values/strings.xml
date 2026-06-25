@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">陶离猩球</string>
+    <string name="notification_service_label">付费监测服务</string>
+    <string name="notification_service_desc">监测支付宝、微信支付等付款通知，自动记录消费</string>
+    <string name="tab_overview">总览</string>
+    <string name="tab_records">记录</string>
+    <string name="tab_categories">类型管理</string>
+    <string name="detect_payment">检测到付费</string>
+    <string name="amount_hint">请输入金额</string>
+    <string name="note_hint">可选：添加备注</string>
+    <string name="confirm_record">确认记录</string>
+    <string name="cancel">取消</string>
+    <string name="add_category">添加类型</string>
+    <string name="new_category_hint">输入新类型名称</string>
+</resources>

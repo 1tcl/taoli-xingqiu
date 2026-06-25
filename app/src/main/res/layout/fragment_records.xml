@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@color/background">
+
+    <!-- Month filter -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:layout_marginBottom="14dp">
+        <ImageButton android:id="@+id/mf_prev" android:src="@drawable/ic_arrow_left"
+            android:layout_width="32dp" android:layout_height="32dp"
+            android:background="@drawable/circle_bg" />
+        <TextView android:id="@+id/mf_label" android:text="2026年6月"
+            android:textSize="16sp" android:textStyle="bold"
+            android:layout_width="0dp" android:layout_weight="1"
+            android:gravity="center" android:textColor="@color/text_primary" />
+        <ImageButton android:id="@+id/mf_next" android:src="@drawable/ic_arrow_right"
+            android:layout_width="32dp" android:layout_height="32dp"
+            android:background="@drawable/circle_bg" />
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/records_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>

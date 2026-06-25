@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@color/background">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/cat_mgmt_list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginTop="16dp"
+        android:padding="4dp">
+        <EditText android:id="@+id/new_cat_input"
+            android:layout_width="0dp" android:layout_height="48dp"
+            android:layout_weight="1" android:hint="@string/new_category_hint"
+            android:paddingHorizontal="14dp" android:maxLength="10"
+            android:background="@drawable/input_bg"
+            android:textSize="15sp" />
+        <Button android:id="@+id/btn_add_cat"
+            android:layout_width="wrap_content" android:layout_height="48dp"
+            android:text="@string/add_category"
+            android:textColor="@color/surface"
+            android:background="@drawable/btn_primary_bg"
+            android:layout_marginStart="10dp"
+            android:paddingHorizontal="20dp" />
+    </LinearLayout>
+
+</LinearLayout>
