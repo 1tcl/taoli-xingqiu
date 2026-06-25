@@ -203,9 +203,9 @@ class MainActivity : AppCompatActivity() {
         MaterialAlertDialogBuilder(this)
             .setTitle("开启付费监测")
             .setMessage(
-                "陶离猩球需要开启"通知监听"权限才能自动监测支付宝、微信支付等付费通知。\n\n" +
-                "1. 点击"去设置"\n" +
-                "2. 找到"陶离猩球"并开启权限\n\n" +
+                "陶离猩球需要开启「通知监听」权限才能自动监测支付宝、微信支付等付费通知。\n\n" +
+                "1. 点击「去设置」\n" +
+                "2. 找到「陶离猩球」并开启权限\n\n" +
                 "（你也可以跳过此步骤，手动点击首页的💰按钮记录消费）"
             )
             .setPositiveButton("去设置") { _, _ ->

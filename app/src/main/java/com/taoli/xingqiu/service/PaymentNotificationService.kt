@@ -43,15 +43,15 @@ class PaymentNotificationService : NotificationListenerService() {
 
         // Regex patterns to extract amounts
         val AMOUNT_PATTERNS = listOf(
-            Pattern.compile("¥\s*(\d+(?:\.\d{1,2})?)"),           // ¥123.45
-            Pattern.compile("￥\s*(\d+(?:\.\d{1,2})?)"),           // ￥123.45
-            Pattern.compile("\$(\d+(?:\.\d{1,2})?)"),              // $123.45
-            Pattern.compile("(\d+(?:\.\d{1,2})?)\s*元"),           // 123.45元
-            Pattern.compile("(\d+(?:\.\d{1,2})?)\s*CNY"),          // 123.45 CNY
-            Pattern.compile("金额[：:]\s*(\d+(?:\.\d{1,2})?)"),      // 金额：123.45
-            Pattern.compile("消费(\d+(?:\.\d{1,2})?)"),              // 消费123.45
-            Pattern.compile("支出[：:]\s*(\d+(?:\.\d{1,2})?)"),      // 支出：123.45
-            Pattern.compile("(\d+(?:\.\d{1,2})?)"),                   // fallback: any number
+            Regex("""¥\s*(\d+(?:\.\d{1,2})?)"""),
+            Regex("""￥\s*(\d+(?:\.\d{1,2})?)"""),
+            Regex("""\$(\d+(?:\.\d{1,2})?)"""),
+            Regex("""(\d+(?:\.\d{1,2})?)\s*元"""),
+            Regex("""(\d+(?:\.\d{1,2})?)\s*CNY"""),
+            Regex("""金额[：:]\s*(\d+(?:\.\d{1,2})?)"""),
+            Regex("""消费(\d+(?:\.\d{1,2})?)"""),
+            Regex("""支出[：:]\s*(\d+(?:\.\d{1,2})?)"""),
+            Regex("""(\d+(?:\.\d{1,2})?)"""),
         )
 
         // Notification text to extract
@@ -93,10 +93,10 @@ class PaymentNotificationService : NotificationListenerService() {
         // Try to extract amount
         var amount: Double? = null
         for (pattern in AMOUNT_PATTERNS) {
-            val matcher = pattern.matcher(text)
-            if (matcher.find()) {
+            val match = pattern.find(text)
+            if (match != null) {
                 try {
-                    amount = matcher.group(1)?.toDoubleOrNull()
+                    amount = match.groupValues[1].toDoubleOrNull()
                     if (amount != null && amount > 0.01 && amount < 1000000) break
                 } catch (e: Exception) {
                     // ignore parse error

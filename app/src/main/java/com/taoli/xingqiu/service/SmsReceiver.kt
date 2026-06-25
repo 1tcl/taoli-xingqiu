@@ -22,11 +22,11 @@ class SmsReceiver : BroadcastReceiver() {
         )
 
         private val AMOUNT_PATTERNS = listOf(
-            Pattern.compile("(?:消费|扣款|支出|转账|付款)(?:金额)?[：:]?\s*(\d+(?:\.\d{1,2})?)"),
-            Pattern.compile("(\d+(?:\.\d{1,2})?)\s*元"),
-            Pattern.compile("¥\s*(\d+(?:\.\d{1,2})?)"),
-            Pattern.compile("￥\s*(\d+(?:\.\d{1,2})?)"),
-            Pattern.compile("\$(\d+(?:\.\d{1,2})?)"),
+            Regex("""(?:消费|扣款|支出|转账|付款)(?:金额)?[：:]?\s*(\d+(?:\.\d{1,2})?)"""),
+            Regex("""(\d+(?:\.\d{1,2})?)\s*元"""),
+            Regex("""¥\s*(\d+(?:\.\d{1,2})?)"""),
+            Regex("""￥\s*(\d+(?:\.\d{1,2})?)"""),
+            Regex("""\$(\d+(?:\.\d{1,2})?)"""),
         )
     }
 
@@ -51,9 +51,9 @@ class SmsReceiver : BroadcastReceiver() {
 
             var amount: Double? = null
             for (pattern in AMOUNT_PATTERNS) {
-                val matcher = pattern.matcher(body)
-                if (matcher.find()) {
-                    amount = matcher.group(1)?.toDoubleOrNull()
+                val match = pattern.find(body)
+                if (match != null) {
+                    amount = match.groupValues[1].toDoubleOrNull()
                     if (amount != null && amount > 0.01) break
                 }
             }

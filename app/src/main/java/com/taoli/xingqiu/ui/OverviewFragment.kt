@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -76,13 +77,13 @@ class OverviewFragment : Fragment() {
         val dbHelper = activity.dbHelper
 
         val records = when (currentPeriod) {
-            "day" -> dbHelper.todayRecords
+            "day" -> dbHelper.getTodayRecords()
             "month" -> {
                 val cal = java.util.Calendar.getInstance()
                 dbHelper.getRecordsByMonth(cal.get(java.util.Calendar.YEAR), cal.get(java.util.Calendar.MONTH) + 1)
             }
-            "year" -> dbHelper.yearRecords
-            else -> dbHelper.todayRecords
+            "year" -> dbHelper.getYearRecords()
+            else -> dbHelper.getTodayRecords()
         }
 
         val labels = mapOf("day" to "今日总消费", "month" to "本月总消费", "year" to "本年总消费")
