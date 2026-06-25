@@ -12,7 +12,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.chip.Chip
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.taoli.xingqiu.data.DatabaseHelper
 import com.taoli.xingqiu.model.Record
 import com.taoli.xingqiu.ui.CategoryFragment
@@ -160,7 +159,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showNotificationListenerSetup() {
-        MaterialAlertDialogBuilder(this)
+        AlertDialog.Builder(this)
             .setTitle("开启付费监测")
             .setMessage(
                 "陶离猩球需要开启「通知监听」权限才能自动监测支付宝、微信支付等付费通知。\n\n" +
