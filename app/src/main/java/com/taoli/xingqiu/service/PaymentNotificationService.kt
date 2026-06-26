@@ -69,7 +69,12 @@ class PaymentNotificationService : NotificationListenerService() {
         if (sbn == null) return
 
         val packageName = sbn.packageName
-        if (packageName !in MONITORED_PACKAGES) return
+        android.util.Log.d("TaoliNotif", "收到通知: $packageName")
+
+        if (packageName !in MONITORED_PACKAGES) {
+            android.util.Log.d("TaoliNotif", "包名 $packageName 不在监控列表中，跳过")
+            return
+        }
 
         val notification = sbn.notification
         val bundle = notification.extras
@@ -83,12 +88,16 @@ class PaymentNotificationService : NotificationListenerService() {
             }
         }
         val text = textContent.toString()
+        android.util.Log.d("TaoliNotif", "通知文本: $text")
 
         // Check if it's a payment notification
         val isPayment = PAYMENT_KEYWORDS.any { keyword ->
             text.contains(keyword, ignoreCase = true)
         }
-        if (!isPayment) return
+        if (!isPayment) {
+            android.util.Log.d("TaoliNotif", "未检测到付款关键词，跳过")
+            return
+        }
 
         // Try to extract amount
         var amount: Double? = null
@@ -103,7 +112,12 @@ class PaymentNotificationService : NotificationListenerService() {
                 }
             }
         }
-        if (amount == null) return
+        if (amount == null) {
+            android.util.Log.d("TaoliNotif", "未能提取金额，跳过")
+            return
+        }
+
+        android.util.Log.d("TaoliNotif", "检测到付款: ¥$amount, 通知来源: $packageName")
 
         // Extract note from notification title or text
         val title = bundle.get(Notification.EXTRA_TITLE)?.toString() ?: ""
