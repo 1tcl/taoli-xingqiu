@@ -30,7 +30,8 @@ class PaymentNotificationService : NotificationListenerService() {
             "com.google.android.apps.messaging",  // Google Messages
             "com.samsung.android.messaging",      // Samsung Messages
             "com.xiaomi.smsextra",                // Xiaomi SMS
-            "com.huawei.message"                   // Huawei SMS
+            "com.huawei.message",                 // Huawei SMS
+            "com.android.shell"                   // ADB test
         )
 
         // Keywords indicating a payment
