@@ -123,45 +123,40 @@ class PaymentNotificationService : NotificationListenerService() {
         val title = bundle.get(Notification.EXTRA_TITLE)?.toString() ?: ""
         val note = if (title.length > 30) title.take(30) + "..." else title
 
-        // Save to pending prefs (for app restart fallback)
-        val prefs = getSharedPreferences("taoli_pending", MODE_PRIVATE)
-        prefs.edit().apply {
-            putString("pending_amount", amount.toString())
-            putString("pending_note", note)
-            putLong("pending_time", System.currentTimeMillis())
-            apply()
-        }
-
-        // Post a heads-up notification that opens the app dialog
-        val channelId = "payment_detected"
+        // Open app directly with full-screen intent
+        val channelId = "payment_alert"
         val nm = getSystemService(android.app.NotificationManager::class.java)
         val channel = android.app.NotificationChannel(
-            channelId, "付款检测", android.app.NotificationManager.IMPORTANCE_HIGH
-        )
+            channelId, "付款弹窗", android.app.NotificationManager.IMPORTANCE_HIGH
+        ).apply {
+            setBypassDnd(true)
+        }
         nm.createNotificationChannel(channel)
 
         val openIntent = Intent(this, MainActivity::class.java).apply {
-            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_SINGLE_TOP)
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP)
             putExtra("show_payment_dialog", true)
             putExtra("detected_amount", amount)
             putExtra("detected_note", note)
         }
         val pendingIntent = android.app.PendingIntent.getActivity(
-            this, 0, openIntent,
+            this, System.currentTimeMillis().toInt(),
+            openIntent,
             android.app.PendingIntent.FLAG_UPDATE_CURRENT or android.app.PendingIntent.FLAG_IMMUTABLE
         )
 
         val notif = Notification.Builder(this, channelId)
             .setSmallIcon(android.R.drawable.ic_dialog_info)
-            .setContentTitle("检测到付款 ¥${String.format("%.2f", amount)}")
-            .setContentText("点击记录这笔消费")
+            .setContentTitle("检测到付款")
+            .setContentText("¥${String.format("%.2f", amount)}")
             .setAutoCancel(true)
-            .setContentIntent(pendingIntent)
-            .setPriority(Notification.PRIORITY_HIGH)
+            .setFullScreenIntent(pendingIntent, true)
+            .setPriority(Notification.PRIORITY_MAX)
+            .setCategory(Notification.CATEGORY_ALARM)
             .build()
 
-        nm.notify(1001, notif)
-        android.util.Log.d("TaoliNotif", "已发送付款提醒通知")
+        nm.notify(System.currentTimeMillis().toInt(), notif)
+        android.util.Log.d("TaoliNotif", "已弹出付款弹窗")
     }
 
     override fun onNotificationRemoved(sbn: StatusBarNotification?) {

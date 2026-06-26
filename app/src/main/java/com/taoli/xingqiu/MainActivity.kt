@@ -65,8 +65,7 @@ class MainActivity : AppCompatActivity() {
         val fab = findViewById<android.widget.Button>(R.id.fab_add)
         fab.setOnClickListener { showPaymentDialog() }
 
-        // Check pending payment from notification
-        checkPendingPayment()
+        // Handle intent from notification click
         handleIntent(intent)
 
         // Show setup hint on first launch
@@ -81,25 +80,16 @@ class MainActivity : AppCompatActivity() {
         handleIntent(intent)
     }
 
-    override fun onResume() {
-        super.onResume()
-        checkPendingPayment()
-    }
-
     private fun handleIntent(intent: Intent?) {
-        if (intent?.getBooleanExtra("show_payment_dialog", false) == true) {
-            val amount = intent.getDoubleExtra("detected_amount", 0.0)
+        val show = intent?.getBooleanExtra("show_payment_dialog", false) ?: false
+        if (show) {
+            val amount = intent!!.getDoubleExtra("detected_amount", 0.0)
             val note = intent.getStringExtra("detected_note") ?: ""
-            if (amount > 0) showPaymentDialog(amount, note)
-        }
-    }
-
-    private fun checkPendingPayment() {
-        val pendingAmount = prefs.getString("pending_amount", null)?.toDoubleOrNull()
-        if (pendingAmount != null && pendingAmount > 0) {
-            val pendingNote = prefs.getString("pending_note", "") ?: ""
-            prefs.edit().remove("pending_amount").remove("pending_note").remove("pending_time").apply()
-            showPaymentDialog(pendingAmount, pendingNote)
+            if (amount > 0) {
+                // Clear the flag so it only triggers once
+                intent.removeExtra("show_payment_dialog")
+                showPaymentDialog(amount, note)
+            }
         }
     }
 
