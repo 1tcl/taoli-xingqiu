@@ -61,18 +61,45 @@ class MainActivity : AppCompatActivity() {
             true
         }
 
-        // Check pending payment
-        val pendingAmount = prefs.getString("pending_amount", null)?.toDoubleOrNull()
-        if (pendingAmount != null && pendingAmount > 0) {
-            val pendingNote = prefs.getString("pending_note", "") ?: ""
-            showPaymentDialog(pendingAmount, pendingNote)
-            prefs.edit().remove("pending_amount").remove("pending_note").remove("pending_time").apply()
-        }
+        // FAB click -> manual payment entry
+        val fab = findViewById<android.widget.Button>(R.id.fab_add)
+        fab.setOnClickListener { showPaymentDialog() }
+
+        // Check pending payment from notification
+        checkPendingPayment()
+        handleIntent(intent)
 
         // Show setup hint on first launch
         if (!prefs.getBoolean("setup_shown", false)) {
             showNotificationListenerSetup()
             prefs.edit().putBoolean("setup_shown", true).apply()
+        }
+    }
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        handleIntent(intent)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        checkPendingPayment()
+    }
+
+    private fun handleIntent(intent: Intent?) {
+        if (intent?.getBooleanExtra("show_payment_dialog", false) == true) {
+            val amount = intent.getDoubleExtra("detected_amount", 0.0)
+            val note = intent.getStringExtra("detected_note") ?: ""
+            if (amount > 0) showPaymentDialog(amount, note)
+        }
+    }
+
+    private fun checkPendingPayment() {
+        val pendingAmount = prefs.getString("pending_amount", null)?.toDoubleOrNull()
+        if (pendingAmount != null && pendingAmount > 0) {
+            val pendingNote = prefs.getString("pending_note", "") ?: ""
+            prefs.edit().remove("pending_amount").remove("pending_note").remove("pending_time").apply()
+            showPaymentDialog(pendingAmount, pendingNote)
         }
     }
 
